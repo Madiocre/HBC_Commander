@@ -1,4 +1,4 @@
-import JobsTable from "../components/JobTable";
+import JobsTable from "./JobTable";
 
 const Jobs = () => {
   return (
