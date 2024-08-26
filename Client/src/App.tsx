@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import LoginForm from './pages/Login';
 import LoggedPage from './pages/Logged_In';
-import { login, logout } from './services/authUtils';
+import { login, logout } from './api/authUtils';
 
 const App = () => {
   const [isLoggedin, setIsLoggedin] = useState(false);
