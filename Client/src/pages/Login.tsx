@@ -14,7 +14,7 @@ const LoginForm: FC<LoginFormProps> = ({ onLogin }) => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    onLogin(email);
+    onLogin(email); // Calls the onLogin function from App
   };
   
   return (
