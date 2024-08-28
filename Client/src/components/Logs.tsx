@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Log } from "../types/logs";
-import logsData from './logsData.json'; // Adjust the import path based on your project structure
+import logsData from './logs.db.json'; // Adjust the import path based on your project structure
 
 const Logs = () => {
   const [logs, setLogs] = useState<Log[]>([]);
@@ -17,7 +17,7 @@ const Logs = () => {
   };
 
   return (
-    <div style={{ padding: '16px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
+    <div style={{ padding: '16px', backgroundColor: '#f5f5f5', borderRadius: '8px', minWidth: '650px', textAlign: 'center' }}>
       <h2 style={{ fontSize: '1.5em', marginTop: '16px', marginBottom: '16px' }}>Logs</h2>
       <div 
         style={{ 
@@ -30,18 +30,10 @@ const Logs = () => {
       >
         {logs.slice(0, 4).map((log) => (
           <div key={log.LogID} style={{ marginBottom: '8px', padding: '4px', borderBottom: '1px solid #ddd' }}>
-            {`${new Date(log.Timestamp).toLocaleString()} - [JobID: ${log.JobID}] [Status: ${log.Status}] ${log.Message} - Trace: ${log.Trace}`}
+            {`${new Date(log.Timestamp).toLocaleString()} - [Status: ${log.Status}] ${log.Message}`}
           </div>
         ))}
       </div>
-      {logs.length > 4 && (
-        <div 
-          style={{ marginTop: '8px', color: '#007bff', cursor: 'pointer' }}
-          onClick={handleViewAllLogs}
-        >
-          {`+ ${logs.length - 4} more log${logs.length > 5 ? 's' : ''}`}
-        </div>
-      )}
     </div>
   );
 };

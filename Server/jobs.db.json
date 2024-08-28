@@ -1,0 +1,66 @@
+[
+  {
+    "JobID": 1,
+    "TaskName": "Data Analysis",
+    "Status": "Completed",
+    "StartTime": "2024-08-28T09:00:00Z",
+    "EndTime": "2024-08-28T10:00:00Z",
+    "ExecutionTime": "1h"
+  },
+  {
+    "JobID": 2,
+    "TaskName": "Model Training",
+    "Status": "Running",
+    "StartTime": "2024-08-28T10:00:00Z",
+    "EndTime": "",
+    "ExecutionTime": "N/A"
+  },
+  {
+    "JobID": 3,
+    "TaskName": "Simulation",
+    "Status": "Failed",
+    "StartTime": "2024-08-28T11:00:00Z",
+    "EndTime": "2024-08-28T11:30:00Z",
+    "ExecutionTime": "30m"
+  },
+  {
+    "JobID": 4,
+    "TaskName": "Database Backup",
+    "Status": "Completed",
+    "StartTime": "2024-08-28T08:00:00Z",
+    "EndTime": "2024-08-28T09:00:00Z",
+    "ExecutionTime": "1h"
+  },
+  {
+    "JobID": 5,
+    "TaskName": "Report Generation",
+    "Status": "Failed",
+    "StartTime": "2024-08-28T12:00:00Z",
+    "EndTime": "2024-08-28T12:45:00Z",
+    "ExecutionTime": "45m"
+  },
+  {
+    "JobID": 6,
+    "TaskName": "Data Migration",
+    "Status": "Completed",
+    "StartTime": "2024-08-27T15:00:00Z",
+    "EndTime": "2024-08-27T18:00:00Z",
+    "ExecutionTime": "3h"
+  },
+  {
+    "JobID": 7,
+    "TaskName": "System Upgrade",
+    "Status": "Failed",
+    "StartTime": "2024-08-28T14:00:00Z",
+    "EndTime": "2024-08-28T15:00:00Z",
+    "ExecutionTime": "1h"
+  },
+  {
+    "JobID": 8,
+    "TaskName": "Web Scraping",
+    "Status": "Completed",
+    "StartTime": "2024-08-28T13:00:00Z",
+    "EndTime": "2024-08-28T14:00:00Z",
+    "ExecutionTime": "1h"
+  }
+]

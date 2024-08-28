@@ -1,0 +1,9 @@
+JobID,TaskName,Status,StartTime,EndTime,ExecutionTime
+1,Data Analysis,Completed,2024-08-28T09:00:00Z,2024-08-28T10:00:00Z,1h
+2,Model Training,Running,2024-08-28T10:00:00Z,,N/A
+3,Simulation,Failed,2024-08-28T11:00:00Z,2024-08-28T11:30:00Z,30m
+4,Database Backup,Completed,2024-08-28T08:00:00Z,2024-08-28T09:00:00Z,1h
+5,Report Generation,Failed,2024-08-28T12:00:00Z,2024-08-28T12:45:00Z,45m
+6,Data Migration,Completed,2024-08-27T15:00:00Z,2024-08-27T18:00:00Z,3h
+7,System Upgrade,Failed,2024-08-28T14:00:00Z,2024-08-28T15:00:00Z,1h
+8,Web Scraping,Completed,2024-08-28T13:00:00Z,2024-08-28T14:00:00Z,1h

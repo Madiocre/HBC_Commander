@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+// const fs = require('fs');
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -5,58 +7,55 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState, useEffect } from "react";
+import { Button } from "@mui/material";
 import { Job } from "../types/job";
-import jobData from "./jobData.json";
-import { Link } from "react-router-dom";
-// import { fetchJobs } from '../api/jobApi';
-const ITEMS_PER_PAGE = 4;
+import jobData from "./jobs.db.json";
+import logsData from "./logs.db.json";
 
+const ITEMS_PER_PAGE = 4;
 
 export default function JobsTable() {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [displayedJobs, setDisplayedJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   const loadJobs = async () => {
-  //     try {
-  //       const jobList = await fetchJobs();
-  //       setJobs(jobList);
-  //     } catch (err) {
-  //       setError("Failed to fetch jobs");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   loadJobs();
-  // }, []);
+  // const [page, setPage] = useState<number>(0);
 
   useEffect(() => {
     try {
-      // Set the jobs data from the imported JSON file
       setJobs(jobData);
+      setDisplayedJobs(jobData.slice(0, ITEMS_PER_PAGE));
     } catch (err) {
-      setError("Failed to load jobs");
+      setError("Failed to load jobs:" + err);
     } finally {
       setLoading(false);
     }
   }, []);
 
+  const handleCancelJob = (jobId: number) => {
+    // Filter out the canceled job
+    const updatedJobs = displayedJobs.filter((job) => job.JobID !== jobId);
+    setDisplayedJobs(updatedJobs);
+
+    // Update the jobs state to reflect the cancellation
+    const remainingJobs = jobs.filter((job) => job.JobID !== jobId);
+    setJobs(remainingJobs);
+
+    // Log the job cancellation
+    const logEntry = {
+      LogID: logsData.length + 1, // Simulate new log entry ID
+      Timestamp: new Date().toISOString(),
+      JobID: jobId,
+      Status: "Canceled",
+      Message: `Job ${jobId} was canceled.`,
+    };
+
+    // Simulate adding log entry
+    logsData.push(logEntry);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
-
-  // const sortedJobs = jobs.sort((a, b) => {
-  //   const statusOrder: { [key: string]: number } = {
-  //     Running: 1,
-  //     Failed: 2,
-  //     Completed: 3,
-  //   };
-  //   return (statusOrder[a.Status] || 4) - (statusOrder[b.Status] || 4);
-  // });
-
-  const displayedJobs = jobs.slice(0, ITEMS_PER_PAGE);
 
   return (
     <div>
@@ -65,15 +64,12 @@ export default function JobsTable() {
           <TableHead>
             <TableRow>
               <TableCell>Job ID</TableCell>
-              <TableCell align="right">Task Name</TableCell>
-              <TableCell align="right">User ID</TableCell>
-              <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Start Time</TableCell>
-              <TableCell align="right">End Time</TableCell>
-              <TableCell align="right">CPUs</TableCell>
-              <TableCell align="right">Memory (GB)</TableCell>
-              <TableCell align="right">Execution Time</TableCell>
-              <TableCell align="right">Description</TableCell>
+              <TableCell align="center">Task Name</TableCell>
+              <TableCell align="center">Status</TableCell>
+              <TableCell align="center">Start Time</TableCell>
+              <TableCell align="center">End Time</TableCell>
+              <TableCell align="center">Execution Time</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -82,40 +78,34 @@ export default function JobsTable() {
                 key={job.JobID}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell align="center" component="th" scope="row">
                   {job.JobID}
                 </TableCell>
-                <TableCell align="right">{job.TaskName}</TableCell>
-                <TableCell align="right">{job.UserID}</TableCell>
-                <TableCell align="right">{job.Status}</TableCell>
-                <TableCell align="right">
+                <TableCell align="center">{job.TaskName}</TableCell>
+                <TableCell align="center">{job.Status}</TableCell>
+                <TableCell align="center">
                   {new Date(job.StartTime).toLocaleString()}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell align="center">
                   {job.EndTime
                     ? new Date(job.EndTime).toLocaleString()
                     : "Running"}
                 </TableCell>
-                <TableCell align="right">{job.ResourcesUsed.CPUs}</TableCell>
-                <TableCell align="right">
-                  {job.ResourcesUsed.MemoryGB}
+                <TableCell align="center">{job.ExecutionTime}</TableCell>
+                <TableCell align="center">
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleCancelJob(job.JobID)}
+                  >
+                    Cancel
+                  </Button>
                 </TableCell>
-                <TableCell align="right">{job.ExecutionTime}</TableCell>
-                <TableCell align="right">{job.Description}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* "+x jobs" link if there are more than 4 jobs */}
-      {jobs.length > ITEMS_PER_PAGE && (
-        <div style={{ marginTop: "16px", textAlign: "center" }}>
-          <Link to="/all-jobs">
-            <button>+{jobs.length - ITEMS_PER_PAGE} jobs</button>
-          </Link>
-        </div>
-      )}
     </div>
   );
 }

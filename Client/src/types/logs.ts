@@ -5,5 +5,4 @@ export interface Log {
   JobID: number;
   Status: string; // Changed from specific literals to string
   Message: string;
-  Trace: string;
 }
